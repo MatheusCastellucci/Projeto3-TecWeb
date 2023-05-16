@@ -2,7 +2,8 @@
 ## Sprints
 ### Sprint 1 (16/5) []
 - [ ] Criar página principal do app/site
-- [ ] Implementar a API em questão.
+- [x] Implementar a API em questão.
+- [x] Começar o Backend.
 
 ### Sprint 3 (23/5) []
 - [ ] Fazer a parte de login.
