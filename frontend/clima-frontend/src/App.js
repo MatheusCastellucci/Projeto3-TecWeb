@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './App.css';
-import { Text, TouchableOpacity } from 'react-native';
 import axios from 'axios'
-// const axios = require('axios');
+
 const key = '34f0af7fd6mshe15209f9c13f7b1p140635jsn0806aa4219eb';
+
 function getData(id, setForecast) {
   const options = {
     method: 'GET',
@@ -20,7 +20,7 @@ function getData(id, setForecast) {
   try {
     axios.request(options).then(function (response) {
       console.log(response.data.current);
-      setForecast(response.data.current.temperature); // Convertendo o objeto em uma string
+      setForecast(response.data.current.temperature);
     });
   } catch (error) {
     console.error(error);
@@ -73,15 +73,16 @@ function App() {
           style={styles.input}
         />
 
-        <button style={styles.button} onClick={() => getID(city, country, setForecast)}/>
+        <button style={styles.button} onClick={() => getID(city, country, setForecast)}>Buscar</button>
           
-        <Text style={styles.resultado}>{forecast.temperature}</Text>
+        <p style={styles.resultado}>{forecast}</p>
       </header>
     </div>
   );
 }
 
 export default App;
+
 
 
 const styles = {
