@@ -1,7 +1,7 @@
 # Projeto3-TecWeb
 ## Sprints
 ### Sprint 1 (16/5) []
-- [ ] Criar página principal do app/site
+- [x] Criar página principal do app/site
 - [x] Implementar a API em questão.
 - [x] Começar o Backend.
 
