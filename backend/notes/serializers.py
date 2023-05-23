@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import Report
+from .models import Note
 
 
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Report
-        fields = ['id', 'city', 'state', 'country']
+        model = Note
+        fields = ['user', 'cidade']
