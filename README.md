@@ -7,7 +7,7 @@
 
 ### Sprint 3 (23/5) []
 - [x] Fazer a parte de login - Backend.
-- [ ] Implementar a funcionalidade de CRUD.
+- [x] Implementar a funcionalidade de CRUD.
 
 ### Sprint final (30/5) []
 - [ ] Fazer a parte de login - Frontend
