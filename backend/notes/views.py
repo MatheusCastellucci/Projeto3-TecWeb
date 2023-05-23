@@ -18,7 +18,7 @@ def api_note(request, note_id):
     
     if request.method == 'POST':
         new_note_data = request.data
-        note.cidade = new_note_data['cidade']
+        cidade = new_note_data['cidade']
         note.save()
     elif request.method == 'DELETE':
         note.delete()
@@ -30,11 +30,10 @@ def api_note(request, note_id):
 @api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def api_notes(request):
-
     if request.method == "POST":
         new_note_data = request.data
         cidade = new_note_data['cidade']
-        note = Note(cidade=cidade)
+        note = Note(cidade=cidade, content=content)
         note.save()
 
     notes = Note.objects.filter(user=request.user)
@@ -62,8 +61,9 @@ def api_get_token(request):
 def api_user(request):
     if request.method == 'POST':
         username = request.data['username']
+        email = request.data['email']
         password = request.data['password']
 
-        user = User.objects.create_user(username, password)
+        user = User.objects.create_user(username, email, password)
         user.save()
         return Response(status=204)
