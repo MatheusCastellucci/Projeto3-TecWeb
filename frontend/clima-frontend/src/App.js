@@ -10,16 +10,13 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-          <Route index element={<Home />} />
-          <Route path="login" element={<LoginScreen />} />
+          <Route index element={<LoginScreen />} />
+          <Route path="home" element={<Home />} />
           <Route path="signup" element={<SignUpScreen />} />
       </Routes>
     </BrowserRouter>
   );
 }
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
 
 const styles = {
   input: {

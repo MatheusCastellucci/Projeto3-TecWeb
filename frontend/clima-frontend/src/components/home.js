@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './App.css';
+import '../App.css';
 import axios from 'axios';
-import LoginScreen from './components/login';
-import SignUpScreen from './components/signup';
+import LoginScreen from './login';
 
 const key = '34f0af7fd6mshe15209f9c13f7b1p140635jsn0806aa4219eb';
 
@@ -110,3 +109,43 @@ function Home() {
   }
 
 export default Home;
+
+const styles = {
+  input: {
+    backgroundColor: "#fff",
+    padding: 10,
+    width: "80%",
+    marginTop: 15,
+    color: "#000",
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "#FFC0CB",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  title: {
+    fontSize: 40,
+    color: "#fff",
+    marginBottom: 20,
+    fontWeight: "bold",
+  },
+  button: {
+    backgroundColor: "#fff",
+    padding: 10,
+    width: "30%",
+    marginTop: 15,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 8,
+  },
+  buttonText: {
+    fontSize: 20,
+    color: "#000",
+  },
+  resultado: {
+    fontSize: 30,
+    color: "#fff",
+    marginTop: 15,
+  },
+};
