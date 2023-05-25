@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './App.css';
 import axios from 'axios';
 
@@ -28,7 +29,7 @@ const SignUpScreen = () => {
   };
 
   function signUP() {
-    axios.post('/api/users/', {
+    axios.post('localhost:8000/api/users/', {
       "username": username,
       "password": password,
       "email": email
@@ -69,7 +70,7 @@ function LoginScreen({ handleLogin }) {
   };
 
   function login() {
-    axios.post('/api/token/', {
+    axios.post('localhost:8000//api/token/', {
       "username": username,
       "password": password,
   })}
@@ -159,7 +160,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-      <button onClick={SignUpScreen}> Sign Up </button>
+        
         {!isLoggedIn ? (
           <LoginScreen handleLogin={handleLogin} />
         ) : (
