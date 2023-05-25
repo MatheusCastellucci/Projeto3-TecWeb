@@ -73,8 +73,12 @@ function LoginScreen({ handleLogin }) {
     axios.post('http://localhost:8000/api/token/', {
       "username": username,
       "password": password,
-  })}
+  })
+  .then(function (response) {
+    console.log(response);
+  })
 
+  }
   return (
     <div>
       <h2>Login</h2>
