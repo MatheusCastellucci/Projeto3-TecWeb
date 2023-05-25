@@ -4,15 +4,66 @@ import axios from 'axios';
 
 const key = '34f0af7fd6mshe15209f9c13f7b1p140635jsn0806aa4219eb';
 
+// Componente para a tela de cadastro
+const SignUpScreen = () => {
+  const [username, setUsernameSignUp] = useState("");
+  const [password, setPasswordSignUp] = useState("");
+  const [email, setEmailSignUp] = useState("");
+
+  const usernameHandler = (e) => {
+    setUsernameSignUp(e.target.value);
+  };
+
+  const passwordHandler = (e) => {
+    setPasswordSignUp(e.target.value);
+  };
+
+  const emailHandler = (e) => {
+    setEmailSignUp(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    signUP({ username, password, email });
+  };
+
+  function signUP({ username, password, email }) {
+    axios.post('/api/users/', {
+      "username": username,
+      "password": password,
+      "email": email
+    })}
+
+  return (
+    <div>
+      <h2>Cadastro</h2>
+      <form onSubmit={handleSubmit}>
+        <input type="text" placeholder="Nome de Usuário" onChange={usernameHandler} value={username}/>
+
+        <input type="password" placeholder="Senha" onChange={passwordHandler} value={password}/>
+
+        <input type="email" placeholder="Email" onChange={emailHandler} value={email}/>
+
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
+  );
+}
+
 // Componente para a tela de login
 function LoginScreen({ handleLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    handleLogin(username, password);
-  };
+  function login({ username, password}) {
+    axios.post('/api/token/', {
+      "username": username,
+      "password": password,
+    })
+    .then(response => {
+      return response.data;
+    })
+  }
 
   return (
     <div>
@@ -123,6 +174,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+      <button onClick={SignUpScreen}> Sign Up </button>
         {!isLoggedIn ? (
           <LoginScreen handleLogin={handleLogin} />
         ) : (
