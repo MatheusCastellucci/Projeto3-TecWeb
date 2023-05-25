@@ -24,10 +24,10 @@ const SignUpScreen = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    signUP({ username, password, email });
+    signUP();
   };
 
-  function signUP({ username, password, email }) {
+  function signUP() {
     axios.post('/api/users/', {
       "username": username,
       "password": password,
@@ -55,31 +55,33 @@ function LoginScreen({ handleLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  function login({ username, password}) {
+  const usernameHandler = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const passwordHandler = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    login();
+  };
+
+  function login() {
     axios.post('/api/token/', {
       "username": username,
       "password": password,
-    })
-    .then(response => {
-      return response.data;
-    })
-  }
+  })}
 
   return (
     <div>
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Nome de Usuário"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          placeholder="Senha"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          type="password"
-        />
+        <input type="text" placeholder="Nome de Usuário" onChange={usernameHandler} value={username}/>
+
+        <input type="password" placeholder="Senha" onChange={passwordHandler} value={password}/>
+        
         <button type="submit">Login</button>
       </form>
     </div>
