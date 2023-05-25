@@ -6,10 +6,11 @@
 - [x] Começar o Backend.
 
 ### Sprint 3 (23/5) []
-- [ ] Fazer a parte de login.
-- [ ] Implementar a funcionalidade de salvar.
+- [x] Fazer a parte de login - Backend.
+- [x] Implementar a funcionalidade de CRUD.
 
 ### Sprint final (30/5) []
+- [ ] Fazer a parte de login - Frontend
 - [ ] Finalizar o CSS de tudo.
 - [ ] Realizar o deploy do site.
 - [ ] Consertar qualquer erro.
