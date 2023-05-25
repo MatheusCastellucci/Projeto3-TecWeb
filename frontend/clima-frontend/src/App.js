@@ -75,7 +75,7 @@ function LoginScreen({ handleLogin }) {
       "password": password,
   })
   .then(function (response) {
-    console.log(response.data.data.token);
+    console.log(response.data['token']);
   })
   }
   return (
