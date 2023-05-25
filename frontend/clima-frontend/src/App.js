@@ -70,7 +70,7 @@ function LoginScreen({ handleLogin }) {
   };
 
   function login() {
-    axios.post('http://localhost:8000//api/token/', {
+    axios.post('http://localhost:8000/api/token/', {
       "username": username,
       "password": password,
   })}
