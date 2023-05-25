@@ -154,23 +154,6 @@ function App() {
     forecast
   };
   setSearchHistory((prevHistory) => [...prevHistory, searchItem]);
-
-  // Fazer uma solicitação ao backend para salvar a pesquisa no histórico
-  axios.post('/api/save-search/', {
-    city: city,
-    country: country,
-    forecast: forecast
-  }, {
-    headers: {
-      Authorization: `Bearer ${authToken}` // Inclua o token de autenticação
-    }
-  })
-  .then(response => {
-    console.log(response.data.message);
-  })
-  .catch(error => {
-    console.error(error);
-  });
 };
 
   return (
