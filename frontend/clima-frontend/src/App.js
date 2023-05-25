@@ -29,7 +29,7 @@ const SignUpScreen = () => {
   };
 
   function signUP() {
-    axios.post('localhost:8000/api/users/', {
+    axios.post('http://localhost:8000/api/users/', {
       "username": username,
       "password": password,
       "email": email
@@ -70,7 +70,7 @@ function LoginScreen({ handleLogin }) {
   };
 
   function login() {
-    axios.post('localhost:8000//api/token/', {
+    axios.post('http://localhost:8000//api/token/', {
       "username": username,
       "password": password,
   })}
@@ -160,7 +160,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        
+
         {!isLoggedIn ? (
           <LoginScreen handleLogin={handleLogin} />
         ) : (
