@@ -33,7 +33,8 @@ def api_notes(request):
     if request.method == "POST":
         new_note_data = request.data
         cidade = new_note_data['cidade']
-        note = Note(cidade=cidade, content=content)
+        user = request.user
+        note = Note(cidade=cidade, user=user)
         note.save()
 
     notes = Note.objects.filter(user=request.user)
