@@ -13,13 +13,25 @@ function Home() {
     const [forecast, setForecast] = useState("");
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [searchHistory, setSearchHistory] = useState([]);
-  
+    const navigate = useNavigate();
+
     const handleLogin = (username, password) => {
-      // Lógica para enviar as credenciais de login para o backend do Django
-      // ...
-      // Após a autenticação bem-sucedida, você pode definir o estado isLoggedIn como true
-      setIsLoggedIn(true);
+      // Perform authentication logic here, such as sending login credentials to the backend
+      axios
+        .post('http://localhost:8000/api/login', {
+          username,
+          password,
+        })
+        .then(function (response) {
+          // If authentication is successful, set the isLoggedIn state to true
+          setIsLoggedIn(true);
+        })
+        .catch(function (error) {
+          // If authentication fails, handle the error
+          console.error(error);
+        });
     };
+  
   
     const handleLogout = () => {
       // Lógica para realizar logout

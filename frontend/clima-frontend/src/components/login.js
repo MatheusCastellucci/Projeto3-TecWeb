@@ -7,6 +7,7 @@ import logo from './images/logo.png';
 function LoginScreen({ handleLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // New state variable
 
   const usernameHandler = (e) => {
     setUsername(e.target.value);
@@ -33,6 +34,9 @@ function LoginScreen({ handleLogin }) {
       .then(function (response) {
         console.log(response.data);
         window.location.replace("/home");
+      }).catch(function (error) {
+        console.log(error);
+        setErrorMessage("Usuário não encontrado!"); // Set error message on login failure
       });
   }
 
@@ -44,6 +48,7 @@ function LoginScreen({ handleLogin }) {
       <div className="FormContainer">
         <img src={logo} alt="Logo" className="Logo" />
         <h2>Login</h2>
+        {errorMessage && <div className="ErrorMessage">{errorMessage}</div>} {/* Render error message */}
         <form onSubmit={handleSubmit}>
           <input type="text" placeholder="Nome de Usuário" onChange={usernameHandler} value={username} />
           <input type="password" placeholder="Senha" onChange={passwordHandler} value={password} />

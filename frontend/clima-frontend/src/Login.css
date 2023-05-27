@@ -67,4 +67,11 @@ button{
     display: flex;
     justify-content:center;
   }
-  
+  .ErrorMessage{
+    color: red;
+    font-weight: bold;
+  }
+
+  h2{
+    color: #1E90FF;
+  }

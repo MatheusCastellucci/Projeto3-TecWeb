@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../App.css';
+import '../Login.css';
 import axios from 'axios';
 
 const SignUpScreen = () => {
@@ -39,14 +39,21 @@ const SignUpScreen = () => {
     }).then(function (response) {
       console.log(response.data);
       window.location.replace("/");
+    }).catch(function (error) {
+      console.log(error);
     });
 
   }
 
   return (
     <div>
-      <h2>Cadastro</h2>
-      <form onSubmit={handleSubmit}>
+      <video className="BackgroundVideo" autoPlay loop>
+        <source src={require('./videos/sunrise.mp4')} type="video/mp4" />
+      </video>
+      <div className="FormContainer">
+        <img src={require('./images/logo.png')} alt="Logo" className="Logo" />
+        <h2>Cadastro</h2>
+        <form onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Nome de Usuário"
@@ -76,6 +83,8 @@ const SignUpScreen = () => {
           Já tenho conta
         </button>
       </form>
+      </div>
+
     </div>
   );
 };
