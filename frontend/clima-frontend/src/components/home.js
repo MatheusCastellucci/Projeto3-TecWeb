@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../App.css';
 import axios from 'axios';
@@ -6,121 +6,136 @@ import LoginScreen from './login';
 
 const key = '34f0af7fd6mshe15209f9c13f7b1p140635jsn0806aa4219eb';
 
-
 function Home() {
-    const [city, setCity] = useState("");
-    const [country, setCountry] = useState("");
-    const [forecast, setForecast] = useState("");
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [searchHistory, setSearchHistory] = useState([]);
-    const navigate = useNavigate();
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("");
+  const [forecast, setForecast] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [searchHistory, setSearchHistory] = useState([]);
+  const navigate = useNavigate();
 
-    const handleLogin = (username, password) => {
-      // Perform authentication logic here, such as sending login credentials to the backend
-      axios
-        .post('http://localhost:8000/api/login', {
-          username,
-          password,
-        })
-        .then(function (response) {
-          // If authentication is successful, set the isLoggedIn state to true
-          setIsLoggedIn(true);
-        })
-        .catch(function (error) {
-          // If authentication fails, handle the error
-          console.error(error);
-        });
+  useEffect(() => {
+    const config = {
+      headers: {
+        Authorization: `Token ${JSON.parse(localStorage.getItem('token'))}`
+      }
     };
-  
-  
-    const handleLogout = () => {
-      // Lógica para realizar logout
-      // ...
-      // Após o logout, você pode definir o estado isLoggedIn como false
-      setIsLoggedIn(false);
+
+
+    axios.get('http://localhost:8000/api/notes/', config)
+      .then(function (response) {
+        setSearchHistory(response.data);
+        console.log(localStorage.getItem('token'))
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }, []);
+
+  const handleLogin = (username, password) => {
+    // Perform authentication logic here, such as sending login credentials to the backend
+    axios
+      .post('http://localhost:8000/api/login', {
+        username,
+        password,
+      })
+      .then(function (response) {
+        // If authentication is successful, set the isLoggedIn state to true
+        setIsLoggedIn(true);
+      })
+      .catch(function (error) {
+        // If authentication fails, handle the error
+        console.error(error);
+      });
+  };
+
+  const handleLogout = () => {
+    // Logout logic here
+    setIsLoggedIn(false);
+  };
+
+  const handleSearch = () => {
+    const options = {
+      method: 'GET',
+      url: 'https://foreca-weather.p.rapidapi.com/location/search/' + city,
+      params: {
+        lang: 'en',
+      },
+      headers: {
+        'X-RapidAPI-Key': key,
+        'X-RapidAPI-Host': 'foreca-weather.p.rapidapi.com'
+      }
     };
-  
-    const handleSearch = () => {
-      const options = {
-        method: 'GET',
-        url: 'https://foreca-weather.p.rapidapi.com/location/search/' + city,
-        params: {
-          lang: 'en',
-          country: country
-        },
-        headers: {
-          'X-RapidAPI-Key': key,
-          'X-RapidAPI-Host': 'foreca-weather.p.rapidapi.com'
-        }
-      };
-  
-      try {
-        axios.request(options).then(function (response) {
-          const ID = response.data.locations[0].id;
+
+    try {
+      axios.request(options).then(function (response) {
+        const ID = response.data.locations[0].id;
+
+        const getDataOptions = {
+          method: 'GET',
+          url: 'https://foreca-weather.p.rapidapi.com/current/' + ID,
+          params: {
+            lang: 'en',
+          },
+          headers: {
+            'X-RapidAPI-Key': key,
+            'X-RapidAPI-Host': 'foreca-weather.p.rapidapi.com'
+          }
+        };
+
+        axios.request(getDataOptions).then(function (response) {
+          setForecast(response.data.current.temperature);
           
-          const getDataOptions = {
-            method: 'GET',
-            url: 'https://foreca-weather.p.rapidapi.com/current/' + ID,
-            params: {
-              lang: 'en',
-            },
+          const data = {
+            'cidade': city,
+          }
+          const header = {
             headers: {
-              'X-RapidAPI-Key': key,
-              'X-RapidAPI-Host': 'foreca-weather.p.rapidapi.com'
+              'Authorization': `Token ${JSON.parse(localStorage.getItem('token'))}`
             }
           };
-  
-          axios.request(getDataOptions).then(function (response) {
-            console.log(response.data.current);
-            setForecast(response.data.current.temperature);
-          });
-        });
-      } catch (error) {
-        console.error(error);
-      }
-        const searchItem = {
-      city,
-      country,
-      forecast
-    };
-    setSearchHistory((prevHistory) => [...prevHistory, searchItem]);
-  };
-  
-    return (
-      <div className="App">
-        <header className="App-header">
-  
-          {!isLoggedIn ? (
-            <LoginScreen handleLogin={handleLogin} />
-          ) : (
-            <>
-              <input
-                placeholder="Cidade"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                style={styles.input}
-              />
-              <input
-                placeholder="País"
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-                style={styles.input}
-              />
-              <button style={styles.button} onClick={handleSearch}>
-                Buscar
-              </button>
-              <p style={styles.resultado}>{forecast}</p>
-              <button style={styles.button} onClick={handleLogout}>
-                Logout
-              </button>
-            </>
-          )}
-        </header>
-      </div>
-    );
-  }
 
-export default Home;
+          axios.post('http://localhost:8000/api/notes/', data, header)
+            .then(function (response) {
+              console.log('Search history saved successfully!');
+            })
+            .catch(function (error) {
+              console.error(error);
+            });
+        });
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleHistoricoClick = () => {
+    navigate('/historico');
+  };
+
+  return (
+    <div className="App">
+      <header className="App-header">
+        <input
+          placeholder="Cidade"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          style={styles.input}
+        />
+        <button style={styles.button} onClick={handleSearch}>
+          Buscar
+        </button>
+        <p style={styles.resultado}>{forecast}</p>
+        <button style={styles.button} onClick={handleLogout}>
+          Logout
+        </button>
+        <button style={styles.button} onClick={handleHistoricoClick}>
+          Historico
+        </button>
+      </header>
+    </div>
+  );
+}
 
 const styles = {
   input: {
@@ -150,6 +165,7 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 8,
+    
   },
   buttonText: {
     fontSize: 20,
@@ -161,3 +177,5 @@ const styles = {
     marginTop: 15,
   },
 };
+
+export default Home;

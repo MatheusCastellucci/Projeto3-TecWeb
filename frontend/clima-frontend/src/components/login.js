@@ -32,7 +32,8 @@ function LoginScreen({ handleLogin }) {
       "password": password,
     })
       .then(function (response) {
-        console.log(response.data);
+        console.log(response.data.token);
+        localStorage.setItem('token', JSON.stringify(response.data.token));
         window.location.replace("/home");
       }).catch(function (error) {
         console.log(error);

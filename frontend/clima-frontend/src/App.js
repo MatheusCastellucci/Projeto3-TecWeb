@@ -3,6 +3,7 @@ import './App.css';
 import LoginScreen from './components/login';
 import SignUpScreen from './components/signup';
 import Home from './components/home';
+import History from './components/history';
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -13,6 +14,8 @@ export default function App() {
           <Route index element={<LoginScreen />} />
           <Route path="home" element={<Home />} />
           <Route path="signup" element={<SignUpScreen />} />
+          <Route path="historico" element={<History />} />
+
       </Routes>
     </BrowserRouter>
   );

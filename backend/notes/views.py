@@ -27,9 +27,11 @@ def api_note(request, note_id):
     serialized_note = NoteSerializer(note)
     return Response(serialized_note.data)
 
-@api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
+
+@api_view(['GET', 'POST'])
 def api_notes(request):
+    print(request)
     if request.method == "POST":
         new_note_data = request.data
         cidade = new_note_data['cidade']
