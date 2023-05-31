@@ -93,7 +93,7 @@ function Home() {
       };
 
       axios.request(getDataOptions).then(function (response) {
-        setForecast(response.data.current.temperature);
+        setForecast(response.data.current.temperature + '°C');
         
         const data = {
           'cidade': city,
