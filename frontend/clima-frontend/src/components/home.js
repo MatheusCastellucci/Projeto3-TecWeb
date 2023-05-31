@@ -52,6 +52,8 @@ function Home() {
   const handleLogout = () => {
     // Logout logic here
     setIsLoggedIn(false);
+    localStorage.removeItem('token')
+    navigate('/');
   };
 
   const handleSearch = () => {
@@ -111,7 +113,12 @@ function Home() {
   };
 
   const handleHistoricoClick = () => {
-    navigate('/historico');
+    if (localStorage.getItem("token") === null) {
+      navigate('/')
+    }
+    else{
+      navigate('/historico');
+    }
   };
 
   return (
