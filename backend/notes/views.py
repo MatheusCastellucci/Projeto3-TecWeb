@@ -28,7 +28,6 @@ def api_note(request, note_id):
     return Response(serialized_note.data)
 
 @permission_classes([IsAuthenticated])
-
 @api_view(['GET', 'POST'])
 def api_notes(request):
     print(request)

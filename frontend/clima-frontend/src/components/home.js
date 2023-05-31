@@ -70,6 +70,7 @@ function Home() {
     try {
       axios.request(options).then(function (response) {
         const ID = response.data.locations[0].id;
+        const city = response.data.locations[0].name;
 
         const getDataOptions = {
           method: 'GET',
@@ -158,7 +159,7 @@ const styles = {
     fontWeight: "bold",
   },
   button: {
-    backgroundColor: "#fff",
+    backgroundColor: "black",
     padding: 10,
     width: "30%",
     marginTop: 15,
