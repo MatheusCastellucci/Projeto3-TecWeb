@@ -12,4 +12,4 @@
 ### Sprint final (30/5) []
 - [x] Fazer a parte de login - Frontend
 - [x] Finalizar o CSS de tudo.
-- [ ] Realizar o deploy do site.
+- [?] Realizar o deploy do site.
