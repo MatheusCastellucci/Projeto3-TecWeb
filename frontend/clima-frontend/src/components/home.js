@@ -123,7 +123,11 @@ function Home() {
     if (localStorage.getItem("token") === null) {
       navigate('/')
     }
+<<<<<<< HEAD
     else {
+=======
+    else{
+>>>>>>> a2e727f35ea88f9e8f9e14cf4ea7b9cb19ffcae7
       navigate('/historico');
     }
   };
