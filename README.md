@@ -18,3 +18,8 @@
 # Link para o vídeo com o showcase do site:
 
 https://youtu.be/Mw8qm-yFR0c
+
+
+# Diagrama de arquitetura:
+
+![Diagrama de arquitetura](Diagrama_de_arquitetura.png)
