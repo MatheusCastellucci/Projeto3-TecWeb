@@ -1,0 +1,83 @@
+body {
+    overflow: hidden;
+  }
+  
+  .Logar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 8vh;
+    width: 8vh;
+    margin-right: 10%;
+  }
+  
+  .Cadastrar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 8vh;
+    width: 8vh;
+  }
+  
+  button {
+    margin-top: 10px;
+    width: 100px;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    background-color: #1E90FF;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .Login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .BackgroundVideo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1;
+  }
+  
+  .FormContainer {
+    position: relative;
+    z-index: 1;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  .Logo {
+    width: auto;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .ButtonContainer {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .ErrorMessage {
+    color: red;
+    font-weight: bold;
+  }
+  
+  h2 {
+    color: #1E90FF;
+  }
+  

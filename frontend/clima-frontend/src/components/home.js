@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../App.css';
+import '../Home.css';
 import axios from 'axios';
-import LoginScreen from './login';
+import earth from './videos/fundo terra.mp4';
+import logo from './images/logo.png';
 
 const key = '34f0af7fd6mshe15209f9c13f7b1p140635jsn0806aa4219eb';
 
@@ -12,6 +13,7 @@ function Home() {
   const [forecast, setForecast] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [searchHistory, setSearchHistory] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(""); // New state variable
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,7 +22,6 @@ function Home() {
         Authorization: `Token ${JSON.parse(localStorage.getItem('token'))}`
       }
     };
-
 
     axios.get('http://localhost:8000/api/notes/', config)
       .then(function (response) {
@@ -52,9 +53,12 @@ function Home() {
   const handleLogout = () => {
     // Logout logic here
     setIsLoggedIn(false);
+    localStorage.removeItem('token')
+    navigate('/');
   };
 
   const handleSearch = () => {
+    setErrorMessage("");
     const options = {
       method: 'GET',
       url: 'https://foreca-weather.p.rapidapi.com/location/search/' + city,
@@ -67,116 +71,95 @@ function Home() {
       }
     };
 
-    try {
-      axios.request(options).then(function (response) {
-        const ID = response.data.locations[0].id;
-        const city = response.data.locations[0].name;
+    axios.request(options).then(function (response) {
+      if (response.data.locations.length === 0) {
+        setErrorMessage('Error. Please check the city name.');
+        return;
+      }
 
-        const getDataOptions = {
-          method: 'GET',
-          url: 'https://foreca-weather.p.rapidapi.com/current/' + ID,
-          params: {
-            lang: 'en',
-          },
+      const ID = response.data.locations[0].id;
+      const city = response.data.locations[0].name;
+
+      const getDataOptions = {
+        method: 'GET',
+        url: 'https://foreca-weather.p.rapidapi.com/current/' + ID,
+        params: {
+          lang: 'en',
+        },
+        headers: {
+          'X-RapidAPI-Key': key,
+          'X-RapidAPI-Host': 'foreca-weather.p.rapidapi.com'
+        }
+      };
+
+      axios.request(getDataOptions).then(function (response) {
+        setForecast(response.data.current.temperature);
+        
+        const data = {
+          'cidade': city,
+        }
+        const header = {
           headers: {
-            'X-RapidAPI-Key': key,
-            'X-RapidAPI-Host': 'foreca-weather.p.rapidapi.com'
+            'Authorization': `Token ${JSON.parse(localStorage.getItem('token'))}`
           }
         };
 
-        axios.request(getDataOptions).then(function (response) {
-          setForecast(response.data.current.temperature);
-          
-          const data = {
-            'cidade': city,
-          }
-          const header = {
-            headers: {
-              'Authorization': `Token ${JSON.parse(localStorage.getItem('token'))}`
-            }
-          };
-
-          axios.post('http://localhost:8000/api/notes/', data, header)
-            .then(function (response) {
-              console.log('Search history saved successfully!');
-            })
-            .catch(function (error) {
-              console.error(error);
-            });
-        });
+        axios.post('http://localhost:8000/api/notes/', data, header)
+          .then(function (response) {
+            console.log('Search history saved successfully!');
+          })
+          .catch(function (error) {
+            console.error(error);
+            setErrorMessage('Error. Verifique se o nome da cidade está correto');
+          });
       });
-    } catch (error) {
+    }).catch(function (error) {
       console.error(error);
-    }
+      setErrorMessage('Error. Failed to fetch data');
+    });
   };
 
   const handleHistoricoClick = () => {
-    navigate('/historico');
+    if (localStorage.getItem("token") === null) {
+      navigate('/')
+    }
+    else {
+      navigate('/historico');
+    }
   };
 
   return (
     <div className="App">
-      <header className="App-header">
+      <video className='BgV' autoPlay muted loop>
+        <source src={earth} type='video/mp4' />
+      </video>
+      <div className='logo'>
+        <img src={logo} alt='logo' />
+      </div>
+      <div className='FormContainer'>
         <input
           placeholder="Cidade"
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          style={styles.input}
+          className='input'
         />
-        <button style={styles.button} onClick={handleSearch}>
+        {errorMessage && <p className='error'>{errorMessage}</p>}
+        <p className='resultado'>{forecast}</p>
+        <div className='ButtonContainer'>
+        <button onClick={handleSearch}>
           Buscar
         </button>
-        <p style={styles.resultado}>{forecast}</p>
-        <button style={styles.button} onClick={handleLogout}>
-          Logout
-        </button>
-        <button style={styles.button} onClick={handleHistoricoClick}>
+        <button onClick={handleHistoricoClick}>
           Historico
         </button>
-      </header>
+        <button onClick={handleLogout}>
+          Logout
+        </button>
+
+        </div>
+        </div>
     </div>
   );
 }
-
-const styles = {
-  input: {
-    backgroundColor: "#fff",
-    padding: 10,
-    width: "80%",
-    marginTop: 15,
-    color: "#000",
-  },
-  container: {
-    flex: 1,
-    backgroundColor: "#FFC0CB",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 40,
-    color: "#fff",
-    marginBottom: 20,
-    fontWeight: "bold",
-  },
-  button: {
-    backgroundColor: "black",
-    padding: 10,
-    width: "30%",
-    marginTop: 15,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 8,
-    
-  },
-  buttonText: {
-    fontSize: 20,
-    color: "#000",
-  },
-  resultado: {
-    fontSize: 30,
-    color: "#fff",
-    marginTop: 15,
-  },
-};
 
 export default Home;

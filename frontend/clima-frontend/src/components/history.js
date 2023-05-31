@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { fetchSearchHistory, handleSearch, deleteSearchHistoryItem } from './historyAPI';
+import { useNavigate } from 'react-router-dom';
+import '../History.css';
 
 function History() {
   const [searchHistory, setSearchHistory] = useState([]);
   const [forecasts, setForecasts] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchSearchHistory()
@@ -44,23 +47,29 @@ function History() {
     }
   };
 
+  const goBack = () => {
+    navigate('/home');
+  };
+
   return (
-    <div>
-      <h2>Search History</h2>
+    <div className="container">
+      <h2>Histórico</h2>
       <ul>
         {searchHistory.map((item, index) => (
           <li key={index}>
             {item.cidade} - {forecasts[item.cidade]}
             <button onClick={() => handleForecastClick(item.cidade)} style={{ marginLeft: '1rem' }}>
-              Get Forecast
+              Temperatura
             </button>
             <button onClick={() => handleDeleteClick(item.id, item.cidade)} style={{ marginLeft: '1rem' }}>
-              Delete
+              Deletar
             </button>
           </li>
         ))}
       </ul>
+      <button onClick={goBack}>Voltar</button>
     </div>
+
   );
 }
 

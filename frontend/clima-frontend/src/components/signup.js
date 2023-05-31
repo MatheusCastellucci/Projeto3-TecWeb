@@ -46,7 +46,7 @@ const SignUpScreen = () => {
   }
 
   return (
-    <div>
+    <div className='Login'>
       <video className="BackgroundVideo" autoPlay loop>
         <source src={require('./videos/sunrise.mp4')} type="video/mp4" />
       </video>
@@ -74,14 +74,17 @@ const SignUpScreen = () => {
           onChange={emailHandler}
           value={email}
         />
-
-        <button type="submit">
+        <div className='ButtonContainer'>
+        <button className = "Logar"type="submit">
           Sign Up
           </button>
 
         <button className="Cadastrar" type="button" onClick={goBack}>
           Já tenho conta
         </button>
+
+        </div>
+
       </form>
       </div>
 
