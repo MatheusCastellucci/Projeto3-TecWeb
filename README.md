@@ -10,7 +10,6 @@
 - [x] Implementar a funcionalidade de CRUD.
 
 ### Sprint final (30/5) []
-- [ ] Fazer a parte de login - Frontend
-- [ ] Finalizar o CSS de tudo.
+- [x] Fazer a parte de login - Frontend
+- [x] Finalizar o CSS de tudo.
 - [ ] Realizar o deploy do site.
-- [ ] Consertar qualquer erro.
