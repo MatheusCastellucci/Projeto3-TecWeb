@@ -13,3 +13,8 @@
 - [x] Fazer a parte de login - Frontend
 - [x] Finalizar o CSS de tudo.
 - [?] Realizar o deploy do site.
+
+
+# Link para o vídeo com o showcase do site:
+
+https://youtu.be/Mw8qm-yFR0c
